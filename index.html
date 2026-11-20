@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <script>
+    // 4. Secret Entrance Passcode Check
+    function checkPasscode() {
+      const input = document.getElementById("secretInput").value.trim().toLowerCase();
+      const error = document.getElementById("lockError");
+      const validAnswers = ["2904", "captainlowkirksaveaho", "april 29", "tame impala", "let it happen"];
+
+      if (validAnswers.includes(input)) {
+        document.getElementById("lockScreen").classList.add("unlocked");
+      } else {
+        error.innerText = "Not quite! Think back to the school camp ride 🏕️";
+      }
+    }
+
+    document.getElementById("secretInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") checkPasscode();
+    });
+  </script>
+  <style>
+      /* Secret Entrance Lock Screen */
+    #lockScreen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #2b1e3d 0%, #4a2545 55%, #7c3aed 100%);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      z-index: 9999;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    #lockScreen.unlocked {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .lock-box {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 24px;
+      padding: 32px 24px;
+      max-width: 380px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .lock-box h2 {
+      font-family: 'Caveat', cursive;
+      font-size: 2.4rem;
+      margin-bottom: 6px;
+    }
+
+    .lock-box p {
+      font-size: 0.9rem;
+      opacity: 0.85;
+      margin-bottom: 20px;
+    }
+
+    .lock-input {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      background: rgba(255, 255, 255, 0.15);
+      color: #fff;
+      font-size: 1rem;
+      text-align: center;
+      outline: none;
+      margin-bottom: 12px;
+    }
+
+    .lock-input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .lock-btn {
+      width: 100%;
+      padding: 12px;
+      border-radius: 12px;
+      border: none;
+      background: #f472b6;
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+
+    .lock-btn:active {
+      transform: scale(0.97);
+    }
+
+    .lock-error {
+      color: #fca5a5;
+      font-size: 0.82rem;
+      margin-top: 10px;
+      min-height: 18px;
+    }
+</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Little Time Capsule ✨</title>
+  <!-- Google Fonts for that handwritten + clean editorial scrapbook feel -->
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-paper: #fdf8f2;
+      --card-white: #ffffff;
+      --ink-dark: #26222f;
+      --ink-muted: #6c6478;
+      --accent-purple: #8b5cf6;
+      --accent-pink: #ec4899;
+      --accent-sunset: #f59e0b;
+      --sticky-yellow: #fef3c7;
+      --sticky-pink: #fce7f3;
+      --sticky-lavender: #ede9fe;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: var(--bg-paper);
+      /* Subtle dot-grid journal paper texture */
+      background-image: radial-gradient(#d8cfc4 1px, transparent 1px);
+      background-size: 20px 20px;
+      color: var(--ink-dark);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      line-height: 1.6;
+      padding: 20px 16px 60px;
+      overflow-x: hidden;
+    }
+
+    .container {
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    header {
+      text-align: center;
+      margin: 16px 0 28px;
+    }
+
+    .badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #ede9fe, #fce7f3);
+      color: var(--accent-purple);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 999px;
+      margin-bottom: 10px;
+      border: 1px solid rgba(139, 92, 246, 0.2);
+    }
+
+    h1 {
+      font-family: 'Caveat', cursive;
+      font-size: 3rem;
+      line-height: 1.05;
+      color: var(--ink-dark);
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      color: var(--ink-muted);
+      font-size: 0.95rem;
+    }
+
+    /* Live Time Counter */
+    .counter-card {
+      background: linear-gradient(135deg, #2b1e3d 0%, #4a2545 55%, #7c3aed 100%);
+      color: #fff;
+      border-radius: 22px;
+      padding: 22px 18px;
+      text-align: center;
+      box-shadow: 0 14px 30px rgba(74, 37, 69, 0.22);
+      margin-bottom: 28px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .counter-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      opacity: 0.85;
+      margin-bottom: 14px;
+    }
+
+    .timer-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+    }
+
+    .time-box {
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(6px);
+      border-radius: 14px;
+      padding: 12px 6px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .time-num {
+      display: block;
+      font-size: 1.55rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .time-label {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.8;
+    }
+
+    .counter-footnote {
+      margin-top: 14px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.35rem;
+      color: #fbcfe8;
+    }
+
+    /* Section Headings */
+    .section-title {
+      font-family: 'Caveat', cursive;
+      font-size: 2rem;
+      margin: 28px 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* Interactive Tame Impala Vinyl Card */
+    .vinyl-card {
+      background: var(--card-white);
+      border-radius: 20px;
+      padding: 20px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    .vinyl-card:active {
+      transform: scale(0.98);
+    }
+
+    .vinyl-disc {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f472b6 0%, #8b5cf6 26%, #18181b 28%, #27272a 48%, #18181b 50%, #27272a 70%, #18181b 100%);
+      flex-shrink: 0;
+      position: relative;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vinyl-disc::after {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: var(--card-white);
+      border-radius: 50%;
+    }
+
+    .spinning {
+      animation: spin 4s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    .vinyl-info h3 {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .vinyl-info p {
+      font-size: 0.85rem;
+      color: var(--ink-muted);
+    }
+
+    .tap-hint {
+      display: inline-block;
+      margin-top: 6px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--accent-purple);
+      background: #f3e8ff;
+      padding: 3px 10px;
+      border-radius: 999px;
+    }
+
+    .vinyl-memory {
+      display: none;
+      margin-top: 12px;
+      background: #faf5ff;
+      border-left: 3px solid var(--accent-purple);
+      padding: 12px 14px;
+      border-radius: 0 12px 12px 0;
+      font-size: 0.9rem;
+      color: var(--ink-dark);
+      animation: fadeIn 0.35s ease;
+    }
+
+    .vinyl-memory.open {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Polaroid Wall */
+    .polaroid-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .polaroid {
+      background: #fff;
+      padding: 10px 10px 18px;
+      border-radius: 6px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #eee;
+      transition: transform 0.25s ease;
+    }
+
+    .polaroid:nth-child(odd) {
+      transform: rotate(-1.8deg);
+    }
+
+    .polaroid:nth-child(even) {
+      transform: rotate(1.8deg);
+    }
+
+    .polaroid:hover {
+      transform: rotate(0deg) scale(1.03);
+      z-index: 2;
+    }
+
+    .photo-placeholder {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 10px;
+      font-size: 0.8rem;
+      color: #5b4b6a;
+      background: linear-gradient(135deg, #fce7f3, #e0e7ff);
+      overflow: hidden;
+    }
+
+    .photo-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .polaroid-caption {
+      font-family: 'Caveat', cursive;
+      font-size: 1.25rem;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--ink-dark);
+      line-height: 1.2;
+    }
+
+    /* Sticky Notes */
+    .notes-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .sticky-note {
+      padding: 18px 20px;
+      border-radius: 14px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.04);
+      position: relative;
+      font-size: 0.94rem;
+    }
+
+    .sticky-note.yellow { background: var(--sticky-yellow); }
+    .sticky-note.pink { background: var(--sticky-pink); }
+    .sticky-note.lavender { background: var(--sticky-lavender); }
+
+    .sticky-note strong {
+      display: block;
+      font-family: 'Caveat', cursive;
+      font-size: 1.45rem;
+      margin-bottom: 4px;
+    }
+
+    /* Interactive Bucket List */
+    .bucket-card {
+      background: var(--card-white);
+      border-radius: 20px;
+      padding: 18px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    .bucket-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 8px;
+      border-bottom: 1px dashed #e5e7eb;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .bucket-item:last-child {
+      border-bottom: none;
+    }
+
+    .checkbox {
+      width: 22px;
+      height: 22px;
+      border-radius: 6px;
+      border: 2px solid var(--accent-purple);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      transition: all 0.2s ease;
+      color: white;
+      font-size: 0.85rem;
+      font-weight: bold;
+    }
+
+    .bucket-item.done .checkbox {
+      background: var(--accent-purple);
+    }
+
+    .bucket-item.done span {
+      text-decoration: line-through;
+      color: var(--ink-muted);
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      font-family: 'Caveat', cursive;
+      font-size: 1.5rem;
+      color: var(--ink-muted);
+    }
+  </style>
+</head>
+<body>
+  <!-- Secret Entrance Screen -->
+  <div id="lockScreen">
+    <div class="lock-box">
+      <div style="font-size: 2.2rem; margin-bottom: 8px;">🔒✨</div>
+      <h2>For Your Eyes Only</h2>
+      <p>Hint: The date we started talking (DDMM) or the band we listened to on the bus 🎧 or easier one your IG handle</p>
+      <input type="text" id="secretInput" class="lock-input" placeholder="Enter secret passcode..." />
+      <button class="lock-btn" onclick="checkPasscode()">Unlock Time Capsule</button>
+      <div class="lock-error" id="lockError"></div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <div class="badge">Est. April 29, 2026</div>
+      <h1>Our Little Time Capsule</h1>
+      <p class="subtitle">From sharing earbuds on the way to camp to right now ✨</p>
+    </header>
+
+    <!-- Live Ticking Counter -->
+    <section class="counter-card">
+      <div class="counter-title">Time Since We Started Talking</div>
+      <div class="timer-grid">
+        <div class="time-box">
+          <span class="time-num" id="days">0</span>
+          <span class="time-label">Days</span>
+        </div>
+        <div class="time-box">
+          <span class="time-num" id="hours">0</span>
+          <span class="time-label">Hours</span>
+        </div>
+        <div class="time-box">
+          <span class="time-num" id="minutes">0</span>
+          <span class="time-label">Mins</span>
+        </div>
+        <div class="time-box">
+          <span class="time-num" id="seconds">0</span>
+          <span class="time-label">Secs</span>
+        </div>
+      </div>
+      <div class="counter-footnote">...and every second has been my favorite.</div>
+    </section>
+
+    <!-- Soundtrack / Tame Impala Memory -->
+    <h2 class="section-title">🎧 Where It Started</h2>
+    <div class="vinyl-card" onclick="toggleVinyl()">
+      <div class="vinyl-disc" id="vinylDisc"></div>
+      <div class="vinyl-info">
+        <h3>Tame Impala — Camp Bus Vibes</h3>
+        <p>One pair of earbuds, two people</p>
+        <span class="tap-hint" id="vinylHint">Tap the record ✨</span>
+      </div>
+    </div>
+    <div class="vinyl-memory" id="vinylMemory">
+      I still think about April 29th on the way to school camp—sharing earbuds and listening to Let It Happen. Like you said "what a very intimate moment that was 🧎‍♂️"
+      </div>
+        <!-- Embedded Spotify Player ("Let It Happen" - Tame Impala) -->
+    <div style="margin-top: 14px;">
+      <iframe 
+        style="border-radius: 16px;" 
+        src="https://open.spotify.com/embed/track/2X485T9Z5Ly0xyaghN73ed?utm_source=generator&theme=0" 
+        width="100%" 
+        height="152" 
+        frameBorder="0" 
+        allowfullscreen="" 
+        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" 
+        loading="lazy">
+      </iframe>
+    </div>
+
+    <!-- Direct Open in Spotify Button -->
+    <div style="text-align: center; margin-top: 10px;">
+      <a href="https://open.spotify.com/track/2X485T9Z5Ly0xyaghN73ed" target="_blank" 
+         style="display: inline-block; background: #1DB954; color: white; font-weight: 700; font-size: 0.85rem; padding: 10px 20px; border-radius: 999px; text-decoration: none; box-shadow: 0 4px 12px rgba(29, 185, 84, 0.3);">
+        Play full track in Spotify ↗
+      </a>
+    </div>
+
+
+    <!-- Polaroid Scrapbook Wall -->
+    <h2 class="section-title">📸 Core Memories</h2>
+    <div class="polaroid-grid">
+      <div class="polaroid">
+        <div class="photo-placeholder"> 
+          <img src="camp.png" alt="School Camp">
+          <!-- TO ADD A REAL PHOTO: Replace this div's text with <img src="yourphoto.jpg" alt="Memory 1"> -->
+          <span>🏕️<br>School Camp<br>(Add photo!)</span>
+        </div>
+        <div class="polaroid-caption">April 29 — Day One</div>
+      </div>
+
+      <div class="polaroid">
+        <div class="photo-placeholder" style="background: linear-gradient(135deg, #fef3c7, #fce7f3);">
+           <img src="pic2.jpg" alt="Memory 2">
+        </div>
+        <div class="polaroid-caption">Tame Impala on repeat</div>
+      </div>
+
+      <div class="polaroid">
+        <div class="photo-placeholder" style="background: linear-gradient(135deg, #dcfce7, #e0f2fe);">
+           <img src="pic3.jpg" alt="Memory 2">
+        </div>
+        <div class="polaroid-caption">Unmatched energy</div>
+      </div>
+
+      <div class="polaroid">
+        <div class="photo-placeholder" style="background: linear-gradient(135deg, #ede9fe, #fae8ff);">
+           <img src="pic4.jpg" alt="Memory 2">
+        </div>
+        <div class="polaroid-caption">Still my favorite person</div>
+      </div>
+    </div>
+
+    <!-- Little Notes -->
+    <h2 class="section-title">💌 Little Notes For You</h2>
+    <div class="notes-stack">
+      <div class="sticky-note yellow">
+        <strong>1. My favorite thing about you</strong>
+        How easy it is to talk to you mann like I'm unfiltered around you
+      </div>
+      <div class="sticky-note pink">
+        <strong>2. A core memory I replay</strong>
+        There are just so many but the one im stuck onto is listening to music together on the way to the trip
+      </div>
+      <div class="sticky-note lavender">
+        <strong>3. Reminder when you're having a long day</strong>
+        You're doing amazing, I'm always cheering for you, and I'm only one text or call away.
+      </div>
+    </div>
+
+    <!-- Interactive Date Bucket List -->
+    <h2 class="section-title">📌 Our Future Bucket List</h2>
+    <div class="bucket-card" id="bucketList">
+      <div class="bucket-item" onclick="toggleCheck(this, 0)">
+        <div class="checkbox"></div>
+        <span>Sleepover😭</span>
+      </div>
+      <div class="bucket-item" onclick="toggleCheck(this, 1)">
+        <div class="checkbox"></div>
+        <span>Go on an unplanned food / dessert run</span>
+      </div>
+      <div class="bucket-item" onclick="toggleCheck(this, 2)">
+        <div class="checkbox"></div>
+        <span>Attend a wedding together where someone would come out and be like "I OBJECT"🙊</span>
+      </div>
+      <div class="bucket-item" onclick="toggleCheck(this, 3)">
+        <div class="checkbox"></div>
+        <span>Karaoke...with our music tastes that accommodate each other it would be so cool ngl</span>
+      </div>
+    </div>
+
+    <footer>
+      Made just for you ♥
+    </footer>
+  </div>
+
+  <script>
+    // 1. Live Counter from April 29, 2026
+    const startDate = new Date("2026-04-29T08:00:00").getTime();
+
+    function updateCounter() {
+      const now = new Date().getTime();
+      const diff = now - startDate;
+
+      if (diff > 0) {
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / 1000 / 60) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        document.getElementById("days").innerText = days;
+        document.getElementById("hours").innerText = hours;
+        document.getElementById("minutes").innerText = minutes;
+        document.getElementById("seconds").innerText = seconds;
+      }
+    }
+    setInterval(updateCounter, 1000);
+    updateCounter();
+
+    // 2. Vinyl Record Toggle
+    let isSpinning = false;
+    function toggleVinyl() {
+      const disc = document.getElementById("vinylDisc");
+      const memory = document.getElementById("vinylMemory");
+      const hint = document.getElementById("vinylHint");
+
+      isSpinning = !isSpinning;
+      if (isSpinning) {
+        disc.classList.add("spinning");
+        memory.classList.add("open");
+        hint.innerText = "Now playing... 🎶";
+      } else {
+        disc.classList.remove("spinning");
+        memory.classList.remove("open");
+        hint.innerText = "Tap the record ✨";
+      }
+    }
+
+    // 3. Bucket List Checkboxes (Saved in Browser Storage)
+    function toggleCheck(el, index) {
+      el.classList.toggle("done");
+      const box = el.querySelector(".checkbox");
+      const isDone = el.classList.contains("done");
+      box.innerText = isDone ? "✓" : "";
+      localStorage.setItem("bucket_" + index, isDone);
+    }
+
+    // Load saved checks on open
+    window.onload = function() {
+      const items = document.querySelectorAll(".bucket-item");
+      items.forEach((item, index) => {
+        if (localStorage.getItem("bucket_" + index) === "true") {
+          item.classList.add("done");
+          item.querySelector(".checkbox").innerText = "✓";
+        }
+      });
+    };
+  </script>
+</body>
+</html>
